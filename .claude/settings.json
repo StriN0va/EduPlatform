@@ -1,0 +1,11 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash(powershell *)",
+            "Bash(cmd.exe *)",
+            "Bash(php *)",
+            "Bash(npm *)",
+            "Bash(composer *)"
+        ]
+    }
+}
