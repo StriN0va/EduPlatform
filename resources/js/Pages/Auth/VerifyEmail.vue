@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { computed } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -25,7 +25,7 @@ const verificationLinkSent = computed(
     <GuestLayout>
         <Head title="Email Verification" />
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-[#1E3A8A]">
             Thanks for signing up! Before getting started, could you verify your
             email address by clicking on the link we just emailed to you? If you
             didn't receive the email, we will gladly send you another.
@@ -52,7 +52,7 @@ const verificationLinkSent = computed(
                     :href="route('logout')"
                     method="post"
                     as="button"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="rounded-md text-sm text-[#1E3A8A] underline hover:text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] focus:ring-offset-2"
                     >Log Out</Link
                 >
             </div>

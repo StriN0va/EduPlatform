@@ -1,8 +1,15 @@
 <script setup>
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import AppFooter from '@/Components/AppFooter.vue';
+import { Link, router, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
-const props = defineProps({ users: Array });
+const props = defineProps({
+    users: Array,
+    filters: Object,
+});
+
 const { auth } = usePage().props;
+const search = ref(props.filters?.q ?? '');
 
 const roleLabels = {
     student: 'Студент',
@@ -13,94 +20,123 @@ const roleLabels = {
 const roleColors = {
     student: 'bg-blue-100 text-blue-700',
     teacher: 'bg-purple-100 text-purple-700',
-    admin: 'bg-red-100 text-red-700',
+    admin: 'bg-red-100 text-[#EF4444]',
+};
+
+const submitSearch = () => {
+    router.get(route('admin.users'), { q: search.value }, {
+        preserveState: true,
+        replace: true,
+    });
+};
+
+const resetSearch = () => {
+    search.value = '';
+    router.get(route('admin.users'), {}, {
+        preserveState: true,
+        replace: true,
+    });
 };
 
 const changeRole = (user, newRole) => {
     if (newRole === user.role) return;
-    const isDowngrade = (user.role === 'teacher' || user.role === 'admin') && newRole === 'student';
-    const isUpgrade = user.role === 'student' && (newRole === 'teacher' || newRole === 'admin');
-    const warn = isDowngrade ? ' Все его курсы будут скрыты.' : isUpgrade ? ' Его скрытые курсы будут восстановлены.' : '';
-    if (confirm(`Изменить роль "${user.name}" на "${roleLabels[newRole]}"?${warn}`)) {
+
+    const warn = user.role !== newRole ? `Изменить роль "${user.name}" на "${roleLabels[newRole]}"?` : '';
+    if (confirm(warn)) {
         useForm({ role: newRole }).patch(route('admin.users.role', user.id));
     }
 };
 
 const deleteUser = (user) => {
-    if (confirm(`Удалить аккаунт "${user.name}"? ${user.role === 'teacher' || user.role === 'admin' ? 'Все его курсы будут скрыты.' : ''}`)) {
+    if (confirm(`Удалить аккаунт "${user.name}"?`)) {
         useForm({}).delete(route('admin.users.destroy', user.id));
     }
 };
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50 flex flex-col">
-
-        <!-- Хедер -->
+    <div class="min-h-screen bg-[#FFFFFF] flex flex-col">
         <nav class="bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <Link :href="route('home')" class="text-2xl font-bold text-indigo-600">EduPlatform</Link>
+                <Link :href="route('home')" class="text-2xl font-bold text-[#1E3A8A]">EduPlatform</Link>
                 <div class="flex gap-4 items-center">
-                    <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md">Курсы</Link>
-                    <Link :href="route('dashboard')" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md">Кабинет</Link>
-                    <Link :href="route('admin.users')" class="bg-indigo-600 border border-indigo-600 text-white px-4 py-2 rounded transition">Пользователи</Link>
-                    <Link :href="route('logout')" method="post" as="button" class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,#64748b_0%,#475569_100%)] px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_24px_-18px_rgba(71,85,105,0.9)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_30px_-18px_rgba(71,85,105,1)]">Выйти</Link>
+                    <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Курсы</Link>
+                    <Link :href="route('dashboard')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Кабинет</Link>
+                    <Link :href="route('admin.users')" class="inline-flex items-center justify-center rounded-full bg-[#F59E0B] px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_-18px_rgba(30,58,138,0.95)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_34px_-18px_rgba(30,58,138,1)]">Пользователи</Link>
+                    <Link :href="route('logout')" method="post" as="button" class="inline-flex items-center justify-center rounded-full bg-[#1E3A8A] px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_24px_-18px_rgba(15,23,42,0.9)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_30px_-18px_rgba(15,23,42,1)]">Выйти</Link>
                 </div>
             </div>
         </nav>
 
-        <!-- Контент -->
-        <div class="flex-1 max-w-5xl mx-auto w-full px-4 py-10">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-900">Управление пользователями</h1>
-                <span class="text-sm text-gray-400">Всего: {{ users.length }}</span>
+        <div class="flex-1 max-w-6xl mx-auto w-full px-4 py-10">
+            <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#0D9488]">Администрирование</p>
+                    <h1 class="mt-2 text-3xl font-bold text-[#0F172A]">Управление пользователями</h1>
+                </div>
+                <span class="text-sm text-[#64748B]">Всего: {{ users.length }}</span>
             </div>
 
-            <div class="bg-white rounded-xl shadow overflow-hidden">
+            <form @submit.prevent="submitSearch" class="mb-6 flex gap-3 rounded-[28px] border border-[#F8FAFC] bg-white p-4 shadow-sm">
+                <input
+                    v-model="search"
+                    type="text"
+                    placeholder="Поиск по @логину или email"
+                    class="min-w-0 flex-1 rounded-2xl border border-[#0D9488] bg-white px-4 py-3 text-[#0F172A] shadow-sm transition focus:border-[#0D9488] focus:outline-none focus:ring-4 focus:ring-[#F8FAFC]"
+                />
+                <button type="submit" class="inline-flex items-center justify-center rounded-2xl bg-[#F59E0B] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_30px_-18px_rgba(30,58,138,0.85)] transition hover:-translate-y-0.5">
+                    Найти
+                </button>
+                <button type="button" @click="resetSearch" class="inline-flex items-center justify-center rounded-2xl border border-[#F8FAFC] bg-white px-5 py-3 text-sm font-medium text-[#0F172A] transition hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A]">
+                    Сброс
+                </button>
+            </form>
+
+            <div class="overflow-hidden rounded-[28px] border border-[#F8FAFC] bg-white shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)]">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-50 border-b border-gray-200">
+                    <thead class="bg-[#FFFFFF] border-b border-[#F8FAFC]">
                         <tr>
-                            <th class="text-left px-6 py-3 font-medium text-gray-500">Пользователь</th>
-                            <th class="text-left px-6 py-3 font-medium text-gray-500">Email</th>
-                            <th class="text-left px-6 py-3 font-medium text-gray-500">Роль</th>
-                            <th class="text-left px-6 py-3 font-medium text-gray-500">Изменить роль</th>
-                            <th class="text-left px-6 py-3 font-medium text-gray-500">Дата регистрации</th>
+                            <th class="text-left px-6 py-3 font-medium text-[#1E3A8A]">Пользователь</th>
+                            <th class="text-left px-6 py-3 font-medium text-[#1E3A8A]">Email</th>
+                            <th class="text-left px-6 py-3 font-medium text-[#1E3A8A]">Роль</th>
+                            <th class="text-left px-6 py-3 font-medium text-[#1E3A8A]">Изменить роль</th>
+                            <th class="text-left px-6 py-3 font-medium text-[#1E3A8A]">Дата регистрации</th>
                             <th class="px-6 py-3"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr v-for="user in users" :key="user.id" class="hover:bg-gray-50 transition">
+                        <tr v-for="user in users" :key="user.id" class="hover:bg-[#FFFFFF] transition">
                             <td class="px-6 py-4">
-                                <div class="font-medium text-gray-800">{{ user.name }}</div>
-                                <div class="text-gray-400 text-xs">@{{ user.username }}</div>
+                                <div class="font-medium text-[#0F172A]">{{ user.name }}</div>
+                                <div class="text-[#64748B] text-xs">@{{ user.username }}</div>
                             </td>
-                            <td class="px-6 py-4 text-gray-600">{{ user.email }}</td>
+                            <td class="px-6 py-4 text-[#1E3A8A]">{{ user.email }}</td>
                             <td class="px-6 py-4">
                                 <span class="text-xs font-medium px-2 py-0.5 rounded-full" :class="roleColors[user.role]">
                                     {{ roleLabels[user.role] ?? user.role }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-gray-400">
-                                {{ new Date(user.created_at).toLocaleDateString('ru-RU') }}
-                            </td>
                             <td class="px-6 py-4">
-                                <select v-if="user.id !== auth.user.id"
+                                <select
+                                    v-if="user.id !== auth.user.id"
                                     :value="user.role"
                                     @change="changeRole(user, $event.target.value)"
-                                    class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[150px]">
+                                    class="border border-[#0D9488] rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] min-w-[150px]"
+                                >
                                     <option value="student">Студент</option>
                                     <option value="teacher">Преподаватель</option>
                                     <option value="admin">Администратор</option>
                                 </select>
-                                <span v-else class="text-gray-300 text-sm">—</span>
+                                <span v-else class="text-[#cbd5e1] text-sm">—</span>
+                            </td>
+                            <td class="px-6 py-4 text-[#64748B]">
+                                {{ new Date(user.created_at).toLocaleDateString('ru-RU') }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <button v-if="user.id !== auth.user.id"
-                                    @click="deleteUser(user)"
-                                    class="text-red-500 hover:text-red-700 text-sm font-medium transition">
+                                <button v-if="user.id !== auth.user.id" @click="deleteUser(user)" class="text-[#EF4444] hover:text-[#EF4444] text-sm font-medium transition">
                                     Удалить
                                 </button>
-                                <span v-else class="text-gray-300 text-sm">Вы</span>
+                                <span v-else class="text-[#cbd5e1] text-sm">Вы</span>
                             </td>
                         </tr>
                     </tbody>
@@ -108,10 +144,6 @@ const deleteUser = (user) => {
             </div>
         </div>
 
-        <!-- Футер -->
-        <footer class="bg-gray-900 py-6 text-center text-gray-400 text-sm mt-10">
-            EduPlatform 2026
-        </footer>
-
+        <AppFooter class="mt-10" />
     </div>
 </template>

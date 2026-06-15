@@ -1,5 +1,6 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3';
+import AppFooter from '@/Components/AppFooter.vue';
 
 const { auth } = usePage().props;
 
@@ -28,25 +29,19 @@ const steps = [
 </script>
 
 <template>
-    <div class="min-h-screen bg-slate-100 overflow-hidden">
-        <div class="fixed inset-0 pointer-events-none z-0">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
-        </div>
-
+    <div class="min-h-screen bg-[#F8FAFC] overflow-hidden">
         <nav class="relative z-10 bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <span class="text-2xl font-bold text-indigo-600">EduPlatform</span>
+                <span class="text-2xl font-bold text-[#1E3A8A]">EduPlatform</span>
                 <div class="flex gap-4">
-                    <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md">Курсы</Link>
+                    <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Курсы</Link>
                     <template v-if="auth.user">
-                        <Link :href="route('dashboard')" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md">Кабинет</Link>
-                        <Link :href="route('logout')" method="post" as="button" class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,#64748b_0%,#475569_100%)] px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_24px_-18px_rgba(71,85,105,0.9)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_30px_-18px_rgba(71,85,105,1)]">Выйти</Link>
+                        <Link :href="route('dashboard')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Кабинет</Link>
+                        <Link :href="route('logout')" method="post" as="button" class="inline-flex items-center justify-center rounded-full bg-[#1E3A8A] px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_24px_-18px_rgba(15,23,42,0.9)] transition hover:-translate-y-0.5 hover:bg-[#0F172A] hover:shadow-[0_18px_30px_-18px_rgba(15,23,42,1)]">Выйти</Link>
                     </template>
                     <template v-else>
-                        <Link :href="route('login')" class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,#64748b_0%,#475569_100%)] px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_24px_-18px_rgba(71,85,105,0.9)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_30px_-18px_rgba(71,85,105,1)]">Войти</Link>
-                        <Link :href="route('register')" class="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,#4f46e5_0%,#6366f1_100%)] px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_-18px_rgba(79,70,229,0.95)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_34px_-18px_rgba(79,70,229,1)]">Регистрация</Link>
+                        <Link :href="route('login')" class="inline-flex items-center justify-center rounded-full bg-[#1E3A8A] px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_24px_-18px_rgba(15,23,42,0.9)] transition hover:-translate-y-0.5 hover:bg-[#0F172A] hover:shadow-[0_18px_30px_-18px_rgba(15,23,42,1)]">Войти</Link>
+                        <Link :href="route('register')" class="inline-flex items-center justify-center rounded-full bg-[#F59E0B] px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_-18px_rgba(30,58,138,0.95)] transition hover:-translate-y-0.5 hover:bg-[#d97706] hover:shadow-[0_22px_34px_-18px_rgba(30,58,138,1)]">Регистрация</Link>
                     </template>
                 </div>
             </div>
@@ -55,66 +50,63 @@ const steps = [
         <div class="relative z-10 max-w-7xl mx-auto px-4 pt-24 pb-12 lg:pt-32">
             <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_420px]">
                 <div>
-                    <div class="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white/80 px-4 py-2 text-sm font-medium text-indigo-700 shadow-sm backdrop-blur">
-                        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <div class="inline-flex items-center gap-2 rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm backdrop-blur">
+                        <span class="h-2 w-2 rounded-full bg-[#0D9488]"></span>
                         Онлайн-обучение в одном кабинете
                     </div>
-                    <h1 class="mt-6 text-5xl font-bold leading-tight text-slate-950 lg:text-6xl">
+                    <h1 class="mt-6 text-5xl font-bold leading-tight text-[#0F172A] lg:text-6xl">
                         Учись. Развивайся.<br>
-                        <span class="text-indigo-600">Достигай.</span>
+                        <span class="text-[#1E3A8A]">Достигай.</span>
                     </h1>
-                    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+                    <p class="mt-6 max-w-2xl text-lg leading-8 text-[#1E3A8A]">
                         Образовательная платформа с курсами по программированию, дизайну и другим направлениям.
                         Изучай материалы в удобном темпе, записывайся на курсы и отслеживай прогресс в одном интерфейсе.
                     </p>
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#4f46e5_0%,#6366f1_100%)] px-8 py-4 text-lg font-semibold text-white shadow-[0_24px_40px_-24px_rgba(79,70,229,0.9)] transition hover:-translate-y-0.5 hover:shadow-[0_30px_46px_-24px_rgba(79,70,229,1)]">
+                        <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-2xl bg-[#F59E0B] px-8 py-4 text-lg font-semibold text-white shadow-[0_24px_40px_-24px_rgba(30,58,138,0.9)] transition hover:-translate-y-0.5 hover:bg-[#d97706] hover:shadow-[0_30px_46px_-24px_rgba(30,58,138,1)]">
                             Смотреть курсы
                         </Link>
-                        <Link v-if="!auth.user" :href="route('register')" class="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/90 px-8 py-4 text-lg font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700">
+                        <Link v-if="!auth.user" :href="route('register')" class="inline-flex items-center justify-center rounded-2xl border border-[#F8FAFC] bg-white/90 px-8 py-4 text-lg font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A]">
                             Создать аккаунт
                         </Link>
                     </div>
                 </div>
 
                 <div class="rounded-[32px] border border-white/70 bg-white/80 p-6 shadow-[0_30px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur">
-                    <div class="rounded-[28px] bg-[linear-gradient(160deg,#eef2ff_0%,#ffffff_52%,#e2e8f0_100%)] p-6">
+                    <div class="rounded-[28px] bg-white p-6">
                         <div class="flex items-start justify-between gap-4">
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-400">Личный кабинет</p>
-                                <h2 class="mt-2 text-2xl font-semibold text-slate-900">Прогресс обучения</h2>
-                            </div>
-                            <div class="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 shadow-sm">
-                                realtime
+                                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#0D9488]">Личный кабинет</p>
+                                <h2 class="mt-2 text-2xl font-semibold text-[#0F172A]">Прогресс обучения</h2>
                             </div>
                         </div>
 
                         <div class="mt-6 space-y-4">
-                            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                                <div class="flex items-center justify-between text-sm text-slate-500">
+                            <div class="rounded-2xl border border-[#F8FAFC] bg-white p-4 shadow-sm">
+                                <div class="flex items-center justify-between text-sm text-[#1E3A8A]">
                                     <span>Основы PHP</span>
                                     <span>72%</span>
                                 </div>
-                                <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-200">
-                                    <div class="h-full w-[72%] rounded-full bg-[linear-gradient(90deg,#6366f1_0%,#22c55e_100%)]"></div>
+                                <div class="mt-3 h-2 overflow-hidden rounded-full bg-[#F8FAFC]">
+                                    <div class="h-full w-[72%] rounded-full bg-[#0D9488]"></div>
                                 </div>
                             </div>
-                            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                                <div class="flex items-center justify-between text-sm text-slate-500">
+                            <div class="rounded-2xl border border-[#F8FAFC] bg-white p-4 shadow-sm">
+                                <div class="flex items-center justify-between text-sm text-[#1E3A8A]">
                                     <span>Vue.js для начинающих</span>
                                     <span>41%</span>
                                 </div>
-                                <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-200">
-                                    <div class="h-full w-[41%] rounded-full bg-[linear-gradient(90deg,#6366f1_0%,#22c55e_100%)]"></div>
+                                <div class="mt-3 h-2 overflow-hidden rounded-full bg-[#F8FAFC]">
+                                    <div class="h-full w-[41%] rounded-full bg-[#0D9488]"></div>
                                 </div>
                             </div>
-                            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                                <div class="flex items-center justify-between text-sm text-slate-500">
+                            <div class="rounded-2xl border border-[#F8FAFC] bg-white p-4 shadow-sm">
+                                <div class="flex items-center justify-between text-sm text-[#1E3A8A]">
                                     <span>UI-дизайн</span>
                                     <span>18%</span>
                                 </div>
-                                <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-200">
-                                    <div class="h-full w-[18%] rounded-full bg-[linear-gradient(90deg,#6366f1_0%,#22c55e_100%)]"></div>
+                                <div class="mt-3 h-2 overflow-hidden rounded-full bg-[#F8FAFC]">
+                                    <div class="h-full w-[18%] rounded-full bg-[#0D9488]"></div>
                                 </div>
                             </div>
                         </div>
@@ -126,96 +118,40 @@ const steps = [
         <div class="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20 grid grid-cols-1 md:grid-cols-3 gap-8">
             <Link
                 :href="route('courses.index')"
-                class="rounded-[28px] border border-slate-200 bg-white/90 p-8 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)] backdrop-blur transition cursor-pointer hover:-translate-y-1 hover:border-indigo-200 hover:bg-indigo-50/80 hover:shadow-[0_24px_46px_-30px_rgba(79,70,229,0.35)]"
+                class="rounded-[28px] border border-[#F8FAFC] bg-white/90 p-8 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)] backdrop-blur transition cursor-pointer hover:-translate-y-1 hover:border-[#0D9488] hover:bg-[#F8FAFC]/80 hover:shadow-[0_24px_46px_-30px_rgba(30,58,138,0.35)]"
             >
-                <div class="mb-5 inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    EduPlatform
-                </div>
-                <h3 class="mb-3 text-xl font-semibold text-slate-900">Курсы на любой вкус</h3>
-                <p class="text-slate-600 leading-7">Программирование, дизайн и другие направления в одном каталоге.</p>
+                <h3 class="mb-3 text-xl font-semibold text-[#0F172A]">Курсы на любой вкус</h3>
+                <p class="text-[#1E3A8A] leading-7">Программирование, дизайн и другие направления в одном каталоге.</p>
             </Link>
 
-            <div class="rounded-[28px] border border-slate-200 bg-white/90 p-8 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)] backdrop-blur">
-                <div class="mb-5 inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    EduPlatform
-                </div>
-                <h3 class="mb-3 text-xl font-semibold text-slate-900">Отслеживай прогресс</h3>
-                <p class="text-slate-600 leading-7">Смотри статус обучения и возвращайся к материалам в удобный момент.</p>
+            <div class="rounded-[28px] border border-[#F8FAFC] bg-white/90 p-8 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)] backdrop-blur">
+                <h3 class="mb-3 text-xl font-semibold text-[#0F172A]">Отслеживай прогресс</h3>
+                <p class="text-[#1E3A8A] leading-7">Смотри статус обучения и возвращайся к материалам в удобный момент.</p>
             </div>
 
             <Link
                 :href="route('teachers.index')"
-                class="rounded-[28px] border border-slate-200 bg-white/90 p-8 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)] backdrop-blur transition cursor-pointer hover:-translate-y-1 hover:border-indigo-200 hover:bg-indigo-50/80 hover:shadow-[0_24px_46px_-30px_rgba(79,70,229,0.35)]"
+                class="rounded-[28px] border border-[#F8FAFC] bg-white/90 p-8 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.35)] backdrop-blur transition cursor-pointer hover:-translate-y-1 hover:border-[#0D9488] hover:bg-[#F8FAFC]/80 hover:shadow-[0_24px_46px_-30px_rgba(30,58,138,0.35)]"
             >
-                <div class="mb-5 inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    EduPlatform
-                </div>
-                <h3 class="mb-3 text-xl font-semibold text-slate-900">Опытные преподаватели</h3>
-                <p class="text-slate-600 leading-7">Познакомься с преподавателями платформы и их направлениями обучения.</p>
+                <h3 class="mb-3 text-xl font-semibold text-[#0F172A]">Опытные преподаватели</h3>
+                <p class="text-[#1E3A8A] leading-7">Познакомься с преподавателями платформы и их направлениями обучения.</p>
             </Link>
         </div>
 
         <div class="relative z-10 max-w-5xl mx-auto px-4 pb-28">
-            <h2 class="mb-14 text-center text-3xl font-bold text-slate-900">Как это работает</h2>
+            <h2 class="mb-14 text-center text-3xl font-bold text-[#0F172A]">Как это работает</h2>
             <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                <div v-for="step in steps" :key="step.number" class="rounded-[28px] border border-slate-200 bg-white/90 p-6 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.25)]">
-                    <div class="inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-indigo-600">
+                <div v-for="step in steps" :key="step.number" class="rounded-[28px] border border-[#F8FAFC] bg-white/90 p-6 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.25)]">
+                    <div class="inline-flex rounded-full bg-[#F8FAFC] px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-[#1E3A8A]">
                         Шаг {{ step.number }}
                     </div>
-                    <h3 class="mt-4 text-lg font-semibold text-slate-900">{{ step.title }}</h3>
-                    <p class="mt-3 text-sm leading-7 text-slate-500">{{ step.description }}</p>
+                    <h3 class="mt-4 text-lg font-semibold text-[#0F172A]">{{ step.title }}</h3>
+                    <p class="mt-3 text-sm leading-7 text-[#1E3A8A]">{{ step.description }}</p>
                 </div>
             </div>
         </div>
 
-        <footer class="relative z-10 bg-gray-900 py-6 text-center text-gray-400 text-sm">
-            EduPlatform 2026
-        </footer>
+        <AppFooter class="relative z-10" />
     </div>
 </template>
 
-<style scoped>
-.blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.35;
-    animation: blobFloat 20s ease-in-out infinite;
-}
-
-.blob-1 {
-    width: 600px;
-    height: 600px;
-    background: #818cf8;
-    top: -150px;
-    left: -150px;
-    animation-delay: 0s;
-    animation-duration: 22s;
-}
-
-.blob-2 {
-    width: 500px;
-    height: 500px;
-    background: #a5b4fc;
-    bottom: 100px;
-    right: -100px;
-    animation-delay: -7s;
-    animation-duration: 26s;
-}
-
-.blob-3 {
-    width: 350px;
-    height: 350px;
-    background: #c7d2fe;
-    top: 40%;
-    left: 40%;
-    animation-delay: -14s;
-    animation-duration: 30s;
-}
-
-@keyframes blobFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -30px) scale(1.04); }
-    66% { transform: translate(-20px, 20px) scale(0.97); }
-}
-</style>

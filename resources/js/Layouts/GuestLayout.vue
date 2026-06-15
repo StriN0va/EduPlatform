@@ -1,15 +1,15 @@
-<script setup>
+﻿<script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
     <div
-        class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0"
+        class="flex min-h-screen flex-col items-center bg-[#F8FAFC] pt-6 sm:justify-center sm:pt-0"
     >
         <div>
             <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current text-gray-500" />
+                <ApplicationLogo class="h-20 w-20 fill-current text-[#1E3A8A]" />
             </Link>
         </div>
 

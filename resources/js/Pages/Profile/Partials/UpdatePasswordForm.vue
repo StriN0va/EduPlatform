@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -36,11 +36,11 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">
+            <h2 class="text-lg font-medium text-[#0F172A]">
                 Update Password
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-1 text-sm text-[#1E3A8A]">
                 Ensure your account is using a long, random password to stay
                 secure.
             </p>
@@ -111,7 +111,7 @@ const updatePassword = () => {
                 >
                     <p
                         v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
+                        class="text-sm text-[#1E3A8A]"
                     >
                         Saved.
                     </p>

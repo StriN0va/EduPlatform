@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -21,7 +21,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Confirm Password" />
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-[#1E3A8A]">
             This is a secure area of the application. Please confirm your
             password before continuing.
         </div>

@@ -17,4 +17,9 @@ class Lesson extends Model
     {
         return $this->hasMany(LessonProgress::class);
     }
+
+    public function practice()
+    {
+        return $this->hasOne(LessonPractice::class);
+    }
 }

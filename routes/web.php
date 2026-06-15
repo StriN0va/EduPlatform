@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])->name('courses.enroll');
     Route::delete('/courses/{course}/enroll', [EnrollmentController::class, 'destroy'])->name('courses.unenroll');
+    Route::post('/courses/{course}/rate', [CourseController::class, 'rate'])->name('courses.rate');
 
     Route::get('/courses/{course}/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
     Route::post('/courses/{course}/lessons/{lesson}/complete', [LessonController::class, 'complete'])->name('lessons.complete');

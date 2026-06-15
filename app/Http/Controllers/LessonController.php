@@ -16,6 +16,8 @@ class LessonController extends Controller
             abort(404);
         }
 
+        $lesson->load('practice');
+
         $isEnrolled = $course->students()->where('user_id', auth()->id())->exists();
         if (!$isEnrolled) {
             return redirect()->route('courses.show', $course);
@@ -61,11 +63,23 @@ class LessonController extends Controller
             'content' => 'nullable|string',
             'video_url' => 'nullable|url',
             'order' => 'integer|min:1',
+            'practice_question' => 'nullable|string',
+            'practice_option_a' => 'nullable|string|max:255',
+            'practice_option_b' => 'nullable|string|max:255',
+            'practice_option_c' => 'nullable|string|max:255',
+            'practice_option_d' => 'nullable|string|max:255',
+            'practice_correct_option' => 'nullable|in:a,b,c,d',
         ]);
 
         $data['order'] = max(0, $data['order'] - 1);
 
-        $course->lessons()->create($data);
+        $practiceData = $this->extractPracticeData($data);
+        $lesson = $course->lessons()->create($data);
+
+        if ($practiceData) {
+            $lesson->practice()->create($practiceData);
+        }
+
         return redirect()->route('courses.edit', $course);
     }
 
@@ -82,11 +96,24 @@ class LessonController extends Controller
             'content' => 'nullable|string',
             'video_url' => 'nullable|url',
             'order' => 'integer|min:1',
+            'practice_question' => 'nullable|string',
+            'practice_option_a' => 'nullable|string|max:255',
+            'practice_option_b' => 'nullable|string|max:255',
+            'practice_option_c' => 'nullable|string|max:255',
+            'practice_option_d' => 'nullable|string|max:255',
+            'practice_correct_option' => 'nullable|in:a,b,c,d',
         ]);
 
         $data['order'] = max(0, $data['order'] - 1);
 
+        $practiceData = $this->extractPracticeData($data);
         $lesson->update($data);
+
+        if ($practiceData) {
+            $lesson->practice()->updateOrCreate(['lesson_id' => $lesson->id], $practiceData);
+        } else {
+            $lesson->practice()->delete();
+        }
 
         return redirect()->route('courses.edit', $course);
     }
@@ -110,5 +137,33 @@ class LessonController extends Controller
         if (!$user || (!$user->isAdmin() && $course->teacher_id !== $user->id)) {
             abort(403);
         }
+    }
+
+    private function extractPracticeData(array &$data): ?array
+    {
+        $practice = [
+            'question' => $data['practice_question'] ?? null,
+            'option_a' => $data['practice_option_a'] ?? null,
+            'option_b' => $data['practice_option_b'] ?? null,
+            'option_c' => $data['practice_option_c'] ?? null,
+            'option_d' => $data['practice_option_d'] ?? null,
+            'correct_option' => $data['practice_correct_option'] ?? null,
+        ];
+
+        unset(
+            $data['practice_question'],
+            $data['practice_option_a'],
+            $data['practice_option_b'],
+            $data['practice_option_c'],
+            $data['practice_option_d'],
+            $data['practice_correct_option']
+        );
+
+        $hasQuestion = filled($practice['question']);
+        $hasRequiredAnswers = filled($practice['option_a']) && filled($practice['option_b']) && filled($practice['correct_option']);
+        $correctKey = $practice['correct_option'] ? 'option_'.$practice['correct_option'] : null;
+        $hasCorrectAnswer = $correctKey && filled($practice[$correctKey]);
+
+        return $hasQuestion && $hasRequiredAnswers && $hasCorrectAnswer ? $practice : null;
     }
 }

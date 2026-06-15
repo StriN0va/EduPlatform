@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseRating;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,6 +29,9 @@ class CourseController extends Controller
             'isEnrolled' => $isEnrolled,
             'canManage' => $canManage,
             'canEnroll' => $user && !$user->isAdmin() && $course->teacher_id !== $user->id,
+            'userRating' => $user
+                ? CourseRating::where('course_id', $course->id)->where('user_id', $user->id)->value('rating')
+                : null,
         ]);
     }
 
@@ -66,7 +70,7 @@ class CourseController extends Controller
     {
         $this->authorizeManageCourse($course);
 
-        $course->load('lessons');
+        $course->load('lessons.practice');
         return Inertia::render('Courses/Edit', ['course' => $course]);
     }
 
@@ -102,6 +106,35 @@ class CourseController extends Controller
         $course->update(['is_published' => false]);
 
         return redirect()->route('courses.index');
+    }
+
+    public function rate(Request $request, Course $course)
+    {
+        $user = auth()->user();
+
+        if (!$user || $user->isAdmin() || $course->teacher_id === $user->id) {
+            abort(403);
+        }
+
+        $isEnrolled = $course->students()->where('user_id', $user->id)->exists();
+        if (!$isEnrolled) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        CourseRating::updateOrCreate(
+            ['course_id' => $course->id, 'user_id' => $user->id],
+            ['rating' => $data['rating']]
+        );
+
+        $course->update([
+            'rating' => round((float) $course->ratings()->avg('rating'), 1),
+        ]);
+
+        return back();
     }
 
     private function authorizeManageCourse(Course $course): void

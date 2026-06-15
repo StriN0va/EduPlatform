@@ -8,15 +8,30 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (!auth()->user()->isAdmin()) {
             abort(403);
         }
 
-        $users = User::orderBy('created_at', 'desc')->get(['id', 'name', 'username', 'email', 'role', 'created_at']);
+        $search = trim((string) $request->query('q', ''));
 
-        return Inertia::render('Admin/Users', ['users' => $users]);
+        $users = User::query()
+            ->when($search !== '', function ($query) use ($search) {
+                $value = ltrim($search, '@');
+
+                $query->where(function ($query) use ($value) {
+                    $query->where('username', 'like', "%{$value}%")
+                        ->orWhere('email', 'like', "%{$value}%");
+                });
+            })
+            ->orderBy('created_at', 'desc')
+            ->get(['id', 'name', 'username', 'email', 'role', 'created_at']);
+
+        return Inertia::render('Admin/Users', [
+            'users' => $users,
+            'filters' => ['q' => $search],
+        ]);
     }
 
     public function updateRole(Request $request, User $user)
