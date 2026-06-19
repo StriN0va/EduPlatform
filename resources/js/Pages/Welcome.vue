@@ -32,7 +32,7 @@ const steps = [
     <div class="min-h-screen bg-[#F8FAFC] overflow-hidden">
         <nav class="relative z-10 bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <span class="text-2xl font-bold text-[#1E3A8A]">EduPlatform</span>
+                <span class="text-2xl font-bold text-[#1E3A8A]">Дополнительное Образование</span>
                 <div class="flex gap-4">
                     <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Курсы</Link>
                     <template v-if="auth.user">
