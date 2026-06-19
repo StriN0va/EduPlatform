@@ -69,7 +69,7 @@ function resetFilters() {
     <div class="min-h-screen bg-[#FFFFFF] flex flex-col">
         <nav class="bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <Link :href="route('home')" class="text-2xl font-bold text-[#1E3A8A]">EduPlatform</Link>
+                <Link :href="route('home')" class="text-2xl font-bold text-[#1E3A8A]">Дополнительное Образование</Link>
                 <div class="flex gap-4 items-center">
                     <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full bg-[#F59E0B] px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_28px_-18px_rgba(30,58,138,0.95)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_34px_-18px_rgba(30,58,138,1)]">Курсы</Link>
                     <template v-if="auth.user">

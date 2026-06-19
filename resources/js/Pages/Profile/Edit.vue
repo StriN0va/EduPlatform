@@ -42,7 +42,7 @@ const deleteAccount = () => {
     <div class="min-h-screen bg-[#F8FAFC] flex flex-col">
         <nav class="bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <Link :href="route('home')" class="text-2xl font-bold text-[#1E3A8A]">EduPlatform</Link>
+                <Link :href="route('home')" class="text-2xl font-bold text-[#1E3A8A]">Дополнительное Образование</Link>
                 <div class="flex gap-4 items-center">
                     <Link :href="route('courses.index')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Курсы</Link>
                     <Link :href="route('dashboard')" class="inline-flex items-center justify-center rounded-full border border-[#F8FAFC] bg-white/80 px-4 py-2 text-sm font-medium text-[#0F172A] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0D9488] hover:bg-[#F8FAFC] hover:text-[#0F172A] hover:shadow-md">Кабинет</Link>
